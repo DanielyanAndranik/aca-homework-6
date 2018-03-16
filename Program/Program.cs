@@ -12,53 +12,64 @@ namespace Program
     {
         static void Main(string[] args)
         {
-            // Repeat 320 times.
             IDictionary<int, int> redBlackDictionary = new RedBlackDictionary<int, int>();
-            Add(redBlackDictionary, 320);
-            Retrieve(redBlackDictionary);
-            Delete(redBlackDictionary);
-
             IDictionary<int, int> avlDictionary = new AVLDictionary<int, int>();
-            Add(avlDictionary, 320);
-            Retrieve(avlDictionary);
-            Delete(avlDictionary);
-
             IDictionary<int, int> dictionary = new Dictionary<int, int>();
-            Add(dictionary, 320);
-            Retrieve(dictionary);
-            Delete(dictionary);
+
+
+            // Repeat 320 times.
+            int count = 320;
+
+            Add(redBlackDictionary, count);
+            Add(avlDictionary, count);
+            Add(dictionary, count);     
+
+            Retrieve(redBlackDictionary, count);
+            Retrieve(avlDictionary, count);
+            Retrieve(dictionary, count);
+
+            Delete(redBlackDictionary, count);
+            Delete(avlDictionary, count);
+            Delete(dictionary, count);
+
+
+            redBlackDictionary.Clear();
+            avlDictionary.Clear();
+            dictionary.Clear();
 
             // Repeat 640 times.
+            count = 640;
+ 
+            Add(redBlackDictionary, count);
+            Add(avlDictionary, count);
+            Add(dictionary, count);
+
+            Retrieve(redBlackDictionary, count);
+            Retrieve(avlDictionary, count);
+            Retrieve(dictionary, count);
+
+            Delete(redBlackDictionary, count);
+            Delete(avlDictionary, count);
+            Delete(dictionary, count);
+
             redBlackDictionary.Clear();
-            Add(redBlackDictionary, 640);
-            Retrieve(redBlackDictionary);
-            Delete(redBlackDictionary);
-
             avlDictionary.Clear();
-            Add(avlDictionary, 640);
-            Retrieve(avlDictionary);
-            Delete(avlDictionary);
-
             dictionary.Clear();
-            Add(dictionary, 640);
-            Retrieve(dictionary);
-            Delete(dictionary);
 
             // Repeat 1280 times.
-            redBlackDictionary.Clear();
-            Add(redBlackDictionary, 1280);
-            Retrieve(redBlackDictionary);
-            Delete(redBlackDictionary);
+            count = 1280;
 
-            avlDictionary.Clear();
-            Add(avlDictionary, 1280);
-            Retrieve(avlDictionary);
-            Delete(avlDictionary);
+            Add(redBlackDictionary, count);
+            Add(avlDictionary, count);
+            Add(dictionary, count);
 
-            dictionary.Clear();
-            Add(dictionary, 1280);
-            Retrieve(dictionary);
-            Delete(dictionary);
+            Retrieve(redBlackDictionary, count);
+            Retrieve(avlDictionary, count);
+            Retrieve(dictionary, count);
+
+            Delete(redBlackDictionary, count);
+            Delete(avlDictionary, count);
+            Delete(dictionary, count);
         }
 
         /// <summary>
@@ -80,27 +91,26 @@ namespace Program
                 }
                 catch(Exception)
                 {
-                    Console.WriteLine("Key is exist.");
                 }
             }
 
             watch.Stop();
             elapsedTime = watch.ElapsedTicks * (1000000.0 / Stopwatch.Frequency);
 
-            Console.WriteLine($"Time it took to create and fill the {dictionary.GetType().Name} is {elapsedTime} microseconds. \n");
+            Console.WriteLine($"Time it took to create and fill the {dictionary.GetType().Name} with {count} random elements is {elapsedTime} microseconds. \n");
         }
 
         /// <summary>
         /// Deletes randomly elements from dictionary.
         /// </summary>
         /// <param name="dictionary">The dictionary.</param>
-        static void Delete(IDictionary<int, int> dictionary)
+        static void Delete(IDictionary<int, int> dictionary, int count)
         {
             Random random = new Random(5);
             double elapsedTime;
 
             var watch = Stopwatch.StartNew();
-            for (int i = 0; i < dictionary.Count; i++)
+            for (int i = 0; i < count; i++)
             {
                 dictionary.Remove(random.Next());
             }
@@ -108,37 +118,29 @@ namespace Program
             watch.Stop();
             elapsedTime = watch.ElapsedTicks * (1000000.0 / Stopwatch.Frequency);
 
-            Console.WriteLine($"Time it took to remove elements from {dictionary.GetType().Name} is {elapsedTime} microseconds. \n");
+            Console.WriteLine($"Time it took to  try remove elements from {dictionary.GetType().Name} {count} times is {elapsedTime} microseconds. \n");
         }
 
         /// <summary>
         /// Retrieves elements from dictionary.
         /// </summary>
         /// <param name="dictionary">The dictionary.</param>
-        static void Retrieve(IDictionary<int, int> dictionary)
+        static void Retrieve(IDictionary<int, int> dictionary, int count)
         {
             Random random = new Random(5);
             double elapsedTime;
 
             var watch = Stopwatch.StartNew();
-            int j;
-            for (int i = 0; i < dictionary.Count; i++)
+            int value;
+            for (int i = 0; i < count; i++)
             {
-                try
-                {
-                    j = random.Next();
-                    Console.WriteLine($"Key - {j}, Value - {dictionary[j]}");
-                }
-                catch (Exception)
-                {
-                    //Console.WriteLine("Item doesn't found.");
-                }
+                dictionary.TryGetValue(random.Next(), out value);
             }
 
             watch.Stop();
             elapsedTime = watch.ElapsedTicks * (1000000.0 / Stopwatch.Frequency);
 
-            Console.WriteLine($"Time it took to retrieve elements from {dictionary.GetType().Name} is {elapsedTime} microseconds. \n");
+            Console.WriteLine($"Time it took to  try get elements from {dictionary.GetType().Name} {count} times is {elapsedTime} microseconds. \n");
         }
 
         
