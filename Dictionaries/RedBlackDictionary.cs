@@ -240,6 +240,7 @@ namespace Dictionaries
             }
 
             this.ClearRecursivly(this.root);
+            this.Count = 0;
         }
 
         /// <summary>
@@ -733,11 +734,13 @@ namespace Dictionaries
             if (rootOfSubtree.LeftChild != null)
             {
                 this.ClearRecursivly(rootOfSubtree.LeftChild);
+                rootOfSubtree.LeftChild = null;
             }
 
             if (rootOfSubtree.RightChild != null)
             {
                 this.ClearRecursivly(rootOfSubtree.RightChild);
+                rootOfSubtree.RightChild = null;
             }
             rootOfSubtree = null;
         }

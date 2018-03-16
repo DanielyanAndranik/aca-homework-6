@@ -418,13 +418,53 @@ namespace Dictionaries
                 }
                 return;
             }
+
             if (node.LeftChild.Height - node.RightChild.Height > 1)
             {
-                this.RightRotation(node);
+                if (node.LeftChild.LeftChild == null)
+                {
+                    this.LeftRotation(node.LeftChild);
+                }
+                else if(node.LeftChild.RightChild == null)
+                {
+                    this.RightRotation(node.LeftChild);
+                }
+                else
+                {
+                    if (node.LeftChild.LeftChild.Height > node.LeftChild.RightChild.Height)
+                    {
+                        this.RightRotation(node);
+                    }
+                    else
+                    {
+                        this.LeftRotation(node.LeftChild);
+                        this.RightRotation(node);
+                    }
+                }
             }
             else if (node.LeftChild.Height - node.RightChild.Height < -1)
             {
-                this.LeftRotation(node);
+                if (node.RightChild.RightChild == null)
+                {
+                    this.RightRotation(node.RightChild);
+                }
+                else if (node.RightChild.LeftChild == null)
+                {
+                    this.LeftRotation(node.LeftChild);
+                }
+                else
+                {
+                    if (node.RightChild.RightChild.Height > node.RightChild.LeftChild.Height)
+                    {
+                        this.LeftRotation(node);
+                    }
+                    else
+                    {
+                        this.RightRotation(node.RightChild);
+                        this.LeftRotation(node);
+                    }
+                }
+                
             }
             if (node.Parent != null)
             {
@@ -438,6 +478,10 @@ namespace Dictionaries
         /// <param name="node">The node.</param>
         private void LeftRotation(AVLNode<TKey, TValue> node)
         {
+            if(node.RightChild == null)
+            {
+                return;
+            }
             AVLNode<TKey, TValue> temporary = node.RightChild;
 
             node.RightChild = temporary.LeftChild;
@@ -472,6 +516,10 @@ namespace Dictionaries
         /// <param name="node">The node.</param>
         private void RightRotation(AVLNode<TKey, TValue> node)
         {
+            if(node.LeftChild == null)
+            {
+                return;
+            }
             AVLNode<TKey, TValue> temporary = node.LeftChild;
 
             node.LeftChild = temporary.RightChild;
@@ -697,11 +745,13 @@ namespace Dictionaries
             if (rootOfSubtree.LeftChild != null)
             {
                 this.ClearRecursivly(rootOfSubtree.LeftChild);
+                rootOfSubtree.LeftChild = null;
             }
 
             if (rootOfSubtree.RightChild != null)
             {
                 this.ClearRecursivly(rootOfSubtree.RightChild);
+                rootOfSubtree.RightChild = null;
             }
             rootOfSubtree = null;
         }
