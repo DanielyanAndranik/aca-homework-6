@@ -11,7 +11,7 @@ namespace Dictionaries
     /// </summary>
     /// <typeparam name="TKey">Generic type of the key.</typeparam>
     /// <typeparam name="TValue">Generic type of the value.</typeparam>
-    public class AVLNode<TKey, TValue> where TKey : IComparable<TKey>
+    internal class AVLNode<TKey, TValue> where TKey : IComparable<TKey>
     {
         /// <summary>
         /// The key of the node.

@@ -555,20 +555,17 @@ namespace Dictionaries
             if (rootOfSubtree.LeftChild == null)
             {
                 this.RemoveNodeHavingRightChild(rootOfSubtree);
-                //this.CheckViolation(rootOfSubtree.RightChild);
                 return true;
             }
 
             if (rootOfSubtree.RightChild == null)
             {
                 this.RemoveNodeHavingLeftChild(rootOfSubtree);
-                // this.CheckViolation(rootOfSubtree.LeftChild);
                 return true;
             }
 
 
             this.RemoveNode(rootOfSubtree);
-            //this.CheckViolation(rootOfSubtree);
             return true;
         }
 
@@ -587,10 +584,12 @@ namespace Dictionaries
             if (node == node.Parent.LeftChild)
             {
                 node.Parent.LeftChild = null;
+                this.CheckBalance(node.Parent);
                 this.Count--;
                 return;
             }
             node.Parent.RightChild = null;
+            this.CheckBalance(node.Parent);
             this.Count--;
             return;
         }
@@ -612,11 +611,13 @@ namespace Dictionaries
             {
                 node.Parent.LeftChild = node.LeftChild;
                 node.LeftChild.Parent = node.Parent;
+                this.CheckBalance(node.Parent);
                 this.Count--;
                 return;
             }
             node.Parent.RightChild = node.LeftChild;
             node.LeftChild.Parent = node.Parent;
+            this.CheckBalance(node.Parent);
             this.Count--;
             return;
         }
@@ -638,11 +639,13 @@ namespace Dictionaries
             {
                 node.Parent.LeftChild = node.RightChild;
                 node.RightChild.Parent = node.Parent;
+                this.CheckBalance(node.Parent);
                 this.Count--;
                 return;
             }
             node.Parent.RightChild = node.RightChild;
             node.RightChild.Parent = node.Parent;
+            this.CheckBalance(node.Parent);
             this.Count--;
             return;
         }
@@ -680,7 +683,7 @@ namespace Dictionaries
                     node.Parent.RightChild = incomer;
                 }
             }
-
+            this.CheckBalance(incomer);
             this.Count--;
             return;
         }
